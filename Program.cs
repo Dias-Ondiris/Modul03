@@ -343,6 +343,111 @@ namespace Modul03
             }
             return sum;
         }
+        static void Sum_min_max()
+        {
+            int[,] massiv = new int[5, 5];
+            Random rand = new Random();
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    massiv[i, j] = rand.Next(-100, 101);
+                    Console.Write(massiv[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            int minRow = 0, minCol = 0, maxRow = 0, maxCol = 0;
+            int minValue = int.MaxValue;
+            int maxValue = int.MinValue;
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    if (massiv[i, j] < minValue)
+                    {
+                        minValue = massiv[i, j];
+                        minRow = i;
+                        minCol = j;
+                    }
+                    if (massiv[i, j] > maxValue)
+                    {
+                        maxValue = massiv[i, j];
+                        maxRow = i;
+                        maxCol = j;
+                    }
+                }
+            }
+            int sum = 0;
+            bool startSum = false;
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    if ((i == minRow && j == minCol) || (i == maxRow && j == maxCol))
+                    {
+                        if (startSum)
+                            break;
+                        else
+                            startSum = true; 
+                    }
+                    else if (startSum)
+                    {
+                        sum += massiv[i, j];
+                    }
+                }
+            }
+            Console.WriteLine($"Сумма элементов между минимальным ({minValue}) и максимальным ({maxValue}) элементами: {sum}");
+        }
+        static void identical_char()
+        {
+            Console.WriteLine("Введите текст:");
+            string text = Console.ReadLine();
+            int current = 1; 
+            int max = 1; 
+            for (int i = 1; i < text.Length; i++)
+            {
+                if (text[i] == text[i - 1])
+                {
+                    current++;
+                    if (current > max)
+                    {
+                        max = current;
+                    }
+                }
+                else
+                {
+                    current = 1; 
+                }
+            }
+
+            Console.WriteLine($"Наибольшее количество идущих подряд одинаковых символов: {max}");
+        }
+        static void How_digits()
+        {
+            Console.WriteLine("Введите строку длиной 20 символов:");
+            string input = Console.ReadLine();
+
+            if (input.Length != 20)
+            {
+                Console.WriteLine("Строка должна содержать 20 символов.");
+                How_digits();
+                return;
+            }
+            else
+            {
+                int digitCount = 0;
+
+                for (int i = 0; i < input.Length; i++)
+                {
+                    if (char.IsDigit(input[i]))
+                    {
+                        digitCount++;
+                    }
+                }
+
+                Console.WriteLine($"Количество цифр в строке: {digitCount}");
+            }
+        }
         static void Main(string[] args)
         {
             int[] scores = { 95, 101, 101, 95, 120,100 };
@@ -404,6 +509,14 @@ namespace Modul03
             //счастливым(если на билете напечатано шестизначное число, и сумма первых трёх цифр равна сумме последних трёх,
             //то этот билет считается счастливым).
             Happy_Ticket();
+            //Дан двумерный массив размерностью 5×5, заполненный случайными числами из диапазона от –100 до 100.
+            //Определить сумму элементов массива, расположенных между минимальным и максимальным элементами.
+            Sum_min_max();
+            //Дан текст. Найти наибольшее количество идущих подряд одинаковых символов
+            identical_char();
+            //Составить программу, которая подсчитывает, сколько содержится цифр в строке длиной 20 символов.
+            How_digits();
+            
             Console.ReadKey();
         }
     }
